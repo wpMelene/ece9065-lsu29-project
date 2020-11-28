@@ -1,0 +1,15 @@
+<h1>Please login first</h1>
+
+<div>
+    <input #email placeholder="Email Address" id="email" />
+    <input #password placeholder="Password" id="password" /> <button (click) = "signin(email.value, password.value)">Sign In</button>
+</div>
+
+
+
+
+<button (click) = "goto()">Do not have an account? Sign up now!</button>
+<!-- <a routerLink="/signup" target="_parent">Do not have an account? Sign up now!</a> -->
+
+
+<router-outlet></router-outlet>
