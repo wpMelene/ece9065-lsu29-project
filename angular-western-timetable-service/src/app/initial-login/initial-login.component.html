@@ -1,15 +1,25 @@
-<h1>Please login first</h1>
-
-<div>
-    <input #email placeholder="Email Address" id="email" />
-    <input #password placeholder="Password" id="password" /> <button (click) = "signin(email.value, password.value)">Sign In</button>
-</div>
+<body>
 
 
+    <div class = "centertop">
+        <h1>Please login first</h1>
+        <input #email placeholder="Email Address" id="email" /> <br>
+        <input #password placeholder="Password" id="password" /> <br>
+        <button (click) = "signin(email.value, password.value)">Sign In</button>
+        <br>
+        <br>
+
+        <button (click) = "goto()">Do not have an account? Sign up now!</button>
+    </div>
 
 
-<button (click) = "goto()">Do not have an account? Sign up now!</button>
-<!-- <a routerLink="/signup" target="_parent">Do not have an account? Sign up now!</a> -->
+    <br>
 
 
-<router-outlet></router-outlet>
+
+    <!-- <a routerLink="/signup" target="_parent">Do not have an account? Sign up now!</a> -->
+
+    <div class = "centertop">
+        <router-outlet></router-outlet>
+    </div>
+</body>

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 import { SignupComponent } from './signup/signup.component';
+import { FunctionalityComponent } from './functionality/functionality.component';
 
 
 
@@ -12,7 +13,8 @@ import { SignupComponent } from './signup/signup.component';
   declarations: [
     AppComponent,
     InitialLoginComponent,
-    SignupComponent
+    SignupComponent,
+    FunctionalityComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,13 @@
-<p>111111111111111111111111</p>
+<p>Create your own account!</p>
+
+<div>
+    <input #username placeholder="Username" id="username1"> <br>
+    <input #email placeholder="Email Address" id="email1" /> <br>
+    <input #password placeholder="Password" id="password1" /> <br> 
+    <button (click) = "signup(username.value, email.value, password.value)">Sign Up</button>
+</div>
+
+
+<div *ngIf="is_verified">
+    Verified!
+</div>

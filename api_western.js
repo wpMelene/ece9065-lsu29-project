@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 //var json_file = require('./Lab3-timetable-data.json');
-app.use('/', express.static('static'));
 const fs = require('fs');
 
 function fsReadFileSynchToArray (filePath) {
@@ -97,30 +96,6 @@ function create_schedule(schedule_name){
     }
 }
 
-// function save_schedule(pairs, schedule_name){
-//     // Save a list of subject code, course code pairs under a given schedule name. 
-//     // Return an error if the schedule name does not exist. 
-//     // Replace existing subject-code + course-code pairs with new values and create new pairs if it doesn’t exist.
-//     // Format for argument pairs: [{subject_code: "ECE", couese_code: "9065"}, ...]
-//     for(i = 0; i < saved_schedule.length; i++){
-//         if(schedule_name == saved_schedule[i].schedule_name_attribute){
-//             saved_schedule[i].course_list_attribute = saved_schedule[i].course_list_attribute.push(pairs);
-//             return saved_schedule[i];
-//     }
-// }
-//     return "No such schedule found";
-// }
-
-// function get_schedule(schedule_name){
-//     // Get the list of subject code, course code pairs for a given schedule.
-//     for(i = 0; i < saved_schedule.length; i++){
-//         if(schedule_name == saved_schedule[i].schedule_name_attribute){
-//            return saved_schedule[i].course_list_attribute;
-//     }
-// }
-//     return "The given schedule is not found";
-// }
-
 function delete_schedule(schedule_name){
     // Delete a schedule with a given name. Return an error if the given schedule doesn’t exist.
     for(i = 0; i < saved_schedule.length; i++){
@@ -167,10 +142,78 @@ function delete_all_schedules(){
     return;
 }
 
+// -------------USER ACCOUNT OPERATION ------------------------------//
+var saved_account = [];
+var username_list = [];
+var email_list = [];
+
+function search_account(username, emailname){
+    // search for a schedule name to check whether it already exists
+    var x;
+    var y;
+    for(i = 0; i < username_list.length; i++){
+        if(username == username_list[i]){
+            x = false;
+        }else{
+            x = true;
+        }
+    }
+    for(j = 0; j < email_list.length; j++){
+        if(emailname == email_list[j]){
+            y = false;
+        }else{
+            y = true;
+        }
+    }
+    
+    if(x && y){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function create_account(username_attribute, email_attribute, password_attribute){
+    // Create a new schedule (to save a list of courses) with a given schedule name.
+    // Return an error if name exists.
+    const account = {
+        username_attribute: "",
+        email_attribute:"",
+        password_attribute:"",
+        auth_attribute: false,              // is the email verified?
+        activation_attribute: true,         // is the account deactivated by the admin?
+        admin_attribute: false              // is the account an admin or granted as an admin?
+    }
+
+    if(search_account(username_attribute, email_attribute)){
+        const account_temp = {
+            username_attribute: username_attribute,
+            email_attribute: email_attribute,
+            password_attribute:password_attribute,
+            auth_attribute: false,              // is the email verified?
+            activation_attribute: true,         // is the account deactivated by the admin?
+            admin_attribute: false              // is the account an admin or granted as an admin?
+        }
+        saved_account.push(account_temp);
+        return "Account created."
+    }
+
+    else{
+        return "Username or Email already exists.";
+    }
+}
 
 
+app.post('/api/accounts', (req, res) => {
+    // search for course code(s)
+    var username_attribute = req.body.username_attribute;
+    var email_attribute = req.body.email_attribute;
+    var password_attribute = req.body.password_attribute;
+    
+    var search_result = create_account(username_attribute, email_attribute, password_attribute);
 
-
+    res.send(JSON.stringify(search_result));
+});
 
 
 
@@ -241,10 +284,6 @@ app.delete('/api/schedules', (req, res) => {
     saved_schedule.splice(index, 1);
 
     res.send(JSON.stringify(saved_schedule.length));
-    // var schedule_name = req.body.schedule_name_attribute;
-    // console.log(schedule_name);
-    // result = delete_schedule(schedule_name);
-    // res.send(JSON.stringify(result));
 });
 
 app.put('/api/schedules', (req, res) => {
