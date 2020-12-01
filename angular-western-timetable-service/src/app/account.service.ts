@@ -13,6 +13,16 @@ export interface Course {
   days?: String[]
 }
 
+export interface Account {
+  username_attribute: "",
+  email_attribute:"",
+  password_attribute:"",
+  auth_attribute: false,              // is the email verified?
+  activation_attribute: true,         // is the account deactivated by the admin?
+  admin_attribute: false,              // is the account an admin or granted as an admin?
+  course_created: 0
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +30,8 @@ export class AccountService {
 
   private courseUrl = 'http://localhost:3000/api/allcourses';  // URL to web api
   private scheduleUrl = 'http://localhost:3000/api/schedules';  // URL to web api
+  private accountUrl = 'http://localhost:3000/api/accounts'; // URL to web api
+  private accountLoginUrl = 'http://localhost:3000/api/accountslogin'; // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -30,6 +42,38 @@ export class AccountService {
   ngOnInit() {
   }
 
+//---------------------------------------------------------------------------------Account services------------------------------------------------------------------------------//
+createAcount(username_attribute: String, email_attribute: String, password_attribute: String):Observable<Account>{
+  const new_added_account = {
+                              "username_attribute": username_attribute,
+                              "email_attribute":email_attribute,
+                              "password_attribute":password_attribute,
+                              "auth_attribute": false,              // is the email verified?
+                              "activation_attribute": true,         // is the account deactivated by the admin?
+                              "admin_attribute": false,              // is the account an admin or granted as an admin?
+                              "course_created": 0
+                            };
+  return this.http.post<any>(this.accountUrl, new_added_account, this.httpOptions)
+}
+
+
+
+loginAcount(email_attribute: String, password_attribute: String):Observable<Account>{
+  const login_account = {
+                              "email_attribute":email_attribute,
+                              "password_attribute":password_attribute,
+                            };
+  return this.http.post<any>(this.accountUrl, login_account, this.httpOptions)
+}
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------Schedule services------------------------------------------------------------------------------//
 /** GET hero by id. Will 404 if id not found */
 getCourse(subject_code: String, course_code: String): Observable<Course> {
 const url = `${this.courseUrl}/${subject_code}/${course_code}`;

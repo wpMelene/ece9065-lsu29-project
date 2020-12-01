@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FunctionalityComponent } from '../functionality/functionality.component'
+import { AccountService } from '../../app/account.service';
 
 @Component({
   selector: 'app-initiallogin',
@@ -8,13 +10,31 @@ import { Router } from '@angular/router';
 })
 export class InitialLoginComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  // How to create an instance:
+  // const my_schedule = {"schedule_name_attribute": hero, 
+  // "list_of_pairs": course_list_attribute};
+
+  constructor(private router:Router,
+              private heroService: AccountService,
+              private functionality:FunctionalityComponent) { }
 
   ngOnInit(): void {
   }
 
-  signin(email: String, password: String){
-    return;
+  signin(email: String, password: String): any{
+    email = email.trim();
+    email = email.replace(/<[^>]+>/g, '');
+    password = password.trim();
+    password = password.replace(/<[^>]+>/g, '');
+
+    if (!email) { return; }
+    if (!password) { return; }
+
+    this.heroService.loginAcount(email, password)
+      .subscribe(hero=> {
+        return hero;
+      });
+
   }
 
   goto(){

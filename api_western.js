@@ -182,7 +182,8 @@ function create_account(username_attribute, email_attribute, password_attribute)
         password_attribute:"",
         auth_attribute: false,              // is the email verified?
         activation_attribute: true,         // is the account deactivated by the admin?
-        admin_attribute: false              // is the account an admin or granted as an admin?
+        admin_attribute: false,              // is the account an admin or granted as an admin?
+        course_created: 0
     }
 
     if(search_account(username_attribute, email_attribute)){
@@ -192,9 +193,11 @@ function create_account(username_attribute, email_attribute, password_attribute)
             password_attribute:password_attribute,
             auth_attribute: false,              // is the email verified?
             activation_attribute: true,         // is the account deactivated by the admin?
-            admin_attribute: false              // is the account an admin or granted as an admin?
+            admin_attribute: false,              // is the account an admin or granted as an admin?
+            course_created: 0
         }
         saved_account.push(account_temp);
+        console.log(saved_account);
         return "Account created."
     }
 
@@ -204,15 +207,30 @@ function create_account(username_attribute, email_attribute, password_attribute)
 }
 
 
+app.post('/api/accountslogin', (req, res) => {
+    var email_attribute_input = req.body.email_attribute;
+    var password_attribute_input = req.body.password_attribute;
+
+    for(i=0;i<saved_account.length;i++){
+        if(email_attribute_input ==saved_account[i].email_attribute){
+            if(password_attribute_input == saved_account[i].password_attribute){
+                return "login in successfully.";
+            }else{
+                return "Username and password do not match."
+            }
+        }
+    }
+});
+
 app.post('/api/accounts', (req, res) => {
     // search for course code(s)
     var username_attribute = req.body.username_attribute;
     var email_attribute = req.body.email_attribute;
     var password_attribute = req.body.password_attribute;
     
-    var search_result = create_account(username_attribute, email_attribute, password_attribute);
+    var create_result = create_account(username_attribute, email_attribute, password_attribute);
 
-    res.send(JSON.stringify(search_result));
+    res.send(JSON.stringify(create_result));
 });
 
 

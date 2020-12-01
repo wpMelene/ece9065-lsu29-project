@@ -50,10 +50,6 @@ export class FunctionalityComponent implements OnInit{
   get_Schedule(schedule_name_attribute: String): void {
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
     this.heroService.getSchedule(schedule_name_attribute).subscribe(res => console.log(res));
-
-    // get_Schedule(schedule_name_attribute: String): void {
-    //   console.log(schedule_name_attribute);
-    //   this.heroService.getSchedule(schedule_name_attribute).subscribe(res => this.saveres = res);
-      
+  
   }
 } 
