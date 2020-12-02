@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FunctionalityComponent } from '../functionality/functionality.component'
 import { AccountService } from '../../app/account.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-initiallogin',
   templateUrl: './initial-login.component.html',
   styleUrls: ['./initial-login.component.css']
 })
+
 export class InitialLoginComponent implements OnInit {
 
   // How to create an instance:
   // const my_schedule = {"schedule_name_attribute": hero, 
   // "list_of_pairs": course_list_attribute};
+  messages: string[] = [];
 
   constructor(private router:Router,
               private heroService: AccountService,
@@ -32,7 +35,7 @@ export class InitialLoginComponent implements OnInit {
 
     this.heroService.loginAcount(email, password)
       .subscribe(hero=> {
-        return hero;
+        this.messages.push(hero.toString());
       });
 
   }
@@ -40,5 +43,4 @@ export class InitialLoginComponent implements OnInit {
   goto(){
     this.router.navigate(['/signup']);
   }
-
 }

@@ -5,11 +5,13 @@ import { environment } from '../../environments/environment';
 import { Schedule } from '../../schedule';
 import { AccountService } from '../../app/account.service';
 
+
 @Component({
   selector: 'app-functionality',
   templateUrl: './functionality.component.html',
   styleUrls: ['./functionality.component.css']
 })
+
 export class FunctionalityComponent implements OnInit{
   front_end_schedule!: Schedule[];
   saveres!: any;
@@ -50,6 +52,5 @@ export class FunctionalityComponent implements OnInit{
   get_Schedule(schedule_name_attribute: String): void {
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
     this.heroService.getSchedule(schedule_name_attribute).subscribe(res => console.log(res));
-  
   }
 } 

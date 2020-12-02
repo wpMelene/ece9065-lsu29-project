@@ -11,3 +11,7 @@
 <div *ngIf="is_verified">
     Verified!
 </div>
+
+<div *ngIf="messages.length">
+    <div *ngFor='let message of messages'> {{message}} </div>
+</div>

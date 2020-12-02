@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FunctionalityComponent } from '../functionality/functionality.component'
 import { AccountService } from '../../app/account.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
 export class SignupComponent implements OnInit {
 
   // How to create an instance:
   // const my_schedule = {"schedule_name_attribute": hero, 
   // "list_of_pairs": course_list_attribute};
+  messages: string[] = [];
 
   is_verified = false;
 
@@ -34,7 +37,7 @@ export class SignupComponent implements OnInit {
 
     this.heroService.createAcount(username, email, password)
       .subscribe(hero=> {
-        return hero;
+        this.messages.push(hero.toString());
       });
   }
 

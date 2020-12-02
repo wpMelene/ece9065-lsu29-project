@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FunctionalityComponent } from './functionality/functionality.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -18,9 +19,10 @@ import { FunctionalityComponent } from './functionality/functionality.component'
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [FunctionalityComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,14 @@ app.use(express.json());
 //var json_file = require('./Lab3-timetable-data.json');
 const fs = require('fs');
 
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 function fsReadFileSynchToArray (filePath) {
     // Reading Json file as an array
     var data = JSON.parse(fs.readFileSync(filePath));
@@ -149,22 +157,22 @@ var email_list = [];
 
 function search_account(username, emailname){
     // search for a schedule name to check whether it already exists
-    var x;
-    var y;
+    var x = true;
+    var y = true;
+
     for(i = 0; i < username_list.length; i++){
         if(username == username_list[i]){
             x = false;
-        }else{
-            x = true;
         }
     }
+    
+    
     for(j = 0; j < email_list.length; j++){
         if(emailname == email_list[j]){
             y = false;
-        }else{
-            y = true;
         }
     }
+
     
     if(x && y){
         return true;
@@ -182,7 +190,7 @@ function create_account(username_attribute, email_attribute, password_attribute)
         password_attribute:"",
         auth_attribute: false,              // is the email verified?
         activation_attribute: true,         // is the account deactivated by the admin?
-        admin_attribute: false,              // is the account an admin or granted as an admin?
+        admin_attribute: false,             // is the account an admin or granted as an admin?
         course_created: 0
     }
 
@@ -193,24 +201,21 @@ function create_account(username_attribute, email_attribute, password_attribute)
             password_attribute:password_attribute,
             auth_attribute: false,              // is the email verified?
             activation_attribute: true,         // is the account deactivated by the admin?
-            admin_attribute: false,              // is the account an admin or granted as an admin?
+            admin_attribute: false,             // is the account an admin or granted as an admin?
             course_created: 0
         }
-        saved_account.push(account_temp);
-        console.log(saved_account);
-        return "Account created."
-    }
 
-    else{
+        saved_account.push(account_temp);
+        username_list.push(username_attribute);
+        email_list.push(email_attribute);
+
+        return "Account created."
+    }else{
         return "Username or Email already exists.";
     }
 }
 
-
-app.post('/api/accountslogin', (req, res) => {
-    var email_attribute_input = req.body.email_attribute;
-    var password_attribute_input = req.body.password_attribute;
-
+function login_account(email_attribute_input, password_attribute_input){
     for(i=0;i<saved_account.length;i++){
         if(email_attribute_input ==saved_account[i].email_attribute){
             if(password_attribute_input == saved_account[i].password_attribute){
@@ -220,6 +225,17 @@ app.post('/api/accountslogin', (req, res) => {
             }
         }
     }
+    return "No such account."
+}
+
+
+app.post('/api/accountslogin', (req, res) => {
+    var email_attribute_input = req.body.email_attribute;
+    var password_attribute_input = req.body.password_attribute;
+
+    var login_result = login_account(email_attribute_input, password_attribute_input);
+
+    res.send(JSON.stringify(login_result));
 });
 
 app.post('/api/accounts', (req, res) => {

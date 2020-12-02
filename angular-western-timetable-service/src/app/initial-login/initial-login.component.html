@@ -15,11 +15,14 @@
 
     <br>
 
-
+    <div class = "centertop" *ngIf="messages.length">
+        <div *ngFor='let message of messages'> {{message}} </div>
+    </div>
 
     <!-- <a routerLink="/signup" target="_parent">Do not have an account? Sign up now!</a> -->
 
     <div class = "centertop">
         <router-outlet></router-outlet>
     </div>
+
 </body>
