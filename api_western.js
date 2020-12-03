@@ -209,7 +209,7 @@ function create_account(username_attribute, email_attribute, password_attribute)
         username_list.push(username_attribute);
         email_list.push(email_attribute);
 
-        return "Account created."
+        return "Account created.";
     }else{
         return "Username or Email already exists.";
     }
@@ -219,7 +219,7 @@ function login_account(email_attribute_input, password_attribute_input){
     for(i=0;i<saved_account.length;i++){
         if(email_attribute_input ==saved_account[i].email_attribute){
             if(password_attribute_input == saved_account[i].password_attribute){
-                return "login in successfully.";
+                return saved_account[i];
             }else{
                 return "Username and password do not match."
             }

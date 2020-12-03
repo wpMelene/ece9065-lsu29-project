@@ -29,11 +29,27 @@ export class SignupComponent implements OnInit {
     username = username.replace(/<[^>]+>/g, '');
     email = email.trim();
     email = email.replace(/<[^>]+>/g, '');
+    email = email.toString();
     password = password.trim();
     password = password.replace(/<[^>]+>/g, '');
 
-    if (!email) { return; }
-    if (!password) { return; }
+    if (!email) { this.messages.push("The email address cannot be null.");
+                  return; }
+    if (!password) { this.messages.push("The password cannot be null.");
+                     return; }
+    if (!username) { this.messages.push("The username cannot be null.");
+                     return; }
+
+    var re = /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.toString());
+    if(!re){
+      this.messages.push("The email address is not in an appropriate format.");
+      return;
+    }
+
+    if(username.length<6 || password.length<6){
+      this.messages.push("The length of input is not allowed. Username and password should be longer than 6 characters.");
+      return;
+    }
 
     this.heroService.createAcount(username, email, password)
       .subscribe(hero=> {
