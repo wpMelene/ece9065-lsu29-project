@@ -7,14 +7,14 @@
     <button (click) = "signup(username.value, email.value, password.value)">Sign Up</button>
 </div>
 
-<div *ngIf="need_verified">
-    <a href="./verify.html" onclick="isVerified()"></a>  
-</div>
-
-<div *ngIf="is_verified">
-    Verified!
-</div>
 
 <div *ngIf="messages.length">
     <div *ngFor='let message of messages'> {{message}} </div>
 </div>
+
+
+<div *ngIf="need_verified">
+    please enter email address here to verity your email: <input #email_verify placeholder="Email address" id="username2"> <br>
+    <button (click) = "isVerified(email_verify.value)">Submit</button>  
+</div>
+

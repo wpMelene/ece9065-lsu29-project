@@ -249,13 +249,32 @@ app.post('/api/accounts', (req, res) => {
     res.send(JSON.stringify(create_result));
 });
 
+function update_account(email_attribute, auth_attribute, activation_attribute, admin_attribute){
+    for(i = 0;i<saved_account.length;i++){
+        if(saved_account[i].email_attribute == email_attribute){
+            if(auth_attribute != "null"){
+                saved_account[i].auth_attribute = auth_attribute;
+            }
+            if(activation_attribute != "null"){
+                saved_account[i].activation_attribute = activation_attribute;
+            }
+            if(admin_attribute != "null"){
+                saved_account[i].admin_attribute = admin_attribute;
+            }
+            return "update account information successfully."
+        }
+        return "Email not found."
+    }
+
+}
+
 app.put('/api/accounts', (req, res) => {
     // search for course code(s)
     var username_attribute = req.body.username_attribute;
     
     var update_result = update_account(username_attribute);
 
-    res.send(JSON.stringify(create_result));
+    res.send(JSON.stringify(update_result));
 });
 
 

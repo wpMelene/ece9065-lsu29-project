@@ -18,7 +18,6 @@ export class SignupComponent implements OnInit {
   messages: string[] = [];
 
   need_verified = false;
-  is_verified = false;
   temp_need_verification: string[] = [];
 
   constructor(private heroService: AccountService) { }
@@ -61,14 +60,33 @@ export class SignupComponent implements OnInit {
         if(typeof hero == "string"){
           this.messages.push(hero)}else{
             this.messages.push("Account Created");
-            this.temp_need_verification.push(hero.username_attribute);
+            this.temp_need_verification.push(hero.email_attribute);
+            this.need_verified = true;
         }
       });
   }
 
-  isVerified(username: string){
+  isVerified(email: string){
+        var re = /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.toString());
+        if(!re){
+          this.messages.push("The email address is not in an appropriate format.");
+          return;
+        }
+
+        var i: number;
+        var found = false;
+        for(i=0; i < this.temp_need_verification.length; i++){
+          if(this.temp_need_verification[i] == email){
+            found = true;
+          }
+        }
+        if(found){
         window.open('./verify.html', '_blank');
-        this.heroService.updateAccountAccess(username, true, "null", "null");
-        this.is_verified = true;
+        this.heroService.updateAccountAccess(email, true, "null", "null").subscribe(hero => {
+          this.messages.push(hero.toString());
+        });
+      }else{
+        this.messages.push("Verification not successful");
+      }
   }
 }
