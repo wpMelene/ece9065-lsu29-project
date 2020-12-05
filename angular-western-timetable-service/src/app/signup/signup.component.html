@@ -7,6 +7,9 @@
     <button (click) = "signup(username.value, email.value, password.value)">Sign Up</button>
 </div>
 
+<div *ngIf="need_verified">
+    <a href="./verify.html" onclick="isVerified()"></a>  
+</div>
 
 <div *ngIf="is_verified">
     Verified!

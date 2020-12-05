@@ -209,7 +209,7 @@ function create_account(username_attribute, email_attribute, password_attribute)
         username_list.push(username_attribute);
         email_list.push(email_attribute);
 
-        return "Account created.";
+        return account_temp;
     }else{
         return "Username or Email already exists.";
     }
@@ -245,6 +245,15 @@ app.post('/api/accounts', (req, res) => {
     var password_attribute = req.body.password_attribute;
     
     var create_result = create_account(username_attribute, email_attribute, password_attribute);
+
+    res.send(JSON.stringify(create_result));
+});
+
+app.put('/api/accounts', (req, res) => {
+    // search for course code(s)
+    var username_attribute = req.body.username_attribute;
+    
+    var update_result = update_account(username_attribute);
 
     res.send(JSON.stringify(create_result));
 });

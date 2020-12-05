@@ -17,7 +17,9 @@ export class SignupComponent implements OnInit {
   // "list_of_pairs": course_list_attribute};
   messages: string[] = [];
 
+  need_verified = false;
   is_verified = false;
+  temp_need_verification: string[] = [];
 
   constructor(private heroService: AccountService) { }
 
@@ -53,12 +55,20 @@ export class SignupComponent implements OnInit {
 
     this.heroService.createAcount(username, email, password)
       .subscribe(hero=> {
-        this.messages.push(hero.toString());
+        // this.messages.push(hero.toString());
+        // if(hero.toString().length <=18){
+        //   this.need_verified = true;
+        if(typeof hero == "string"){
+          this.messages.push(hero)}else{
+            this.messages.push("Account Created");
+            this.temp_need_verification.push(hero.username_attribute);
+        }
       });
   }
 
-  isVerified(){
+  isVerified(username: string){
         window.open('./verify.html', '_blank');
+        this.heroService.updateAccountAccess(username, true, "null", "null");
         this.is_verified = true;
   }
 }

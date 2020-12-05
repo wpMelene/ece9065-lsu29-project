@@ -63,7 +63,17 @@ loginAcount(email_attribute: String, password_attribute: String):Observable<Acco
                               "email_attribute":email_attribute,
                               "password_attribute":password_attribute,
                             };
-  return this.http.post<any>(this.accountLoginUrl, login_account, this.httpOptions)
+  return this.http.post<any>(this.accountLoginUrl, login_account, this.httpOptions);
+}
+
+updateAccountAccess(username_attribute: String, auth_attribute: any, activation_attribute: any, admin_attribute: any): Observable<Account>{
+  const update_account = {
+    "username_attribute":username_attribute,
+    "auth_attribute": auth_attribute,              // is the email verified?
+    "activation_attribute": activation_attribute,         // is the account deactivated by the admin?
+    "admin_attribute": admin_attribute,              // is the account an admin or granted as an admin?
+  }
+  return this.http.put<any>(this.accountUrl, update_account, this.httpOptions);
 }
 
 
