@@ -11,7 +11,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class InitialLoginComponent implements OnInit {
-
   // How to create an instance:
   // const my_schedule = {"schedule_name_attribute": hero, 
   // "list_of_pairs": course_list_attribute};
@@ -60,7 +59,7 @@ export class InitialLoginComponent implements OnInit {
 
   }
 
-  goto(){
-    this.router.navigate(['/signup']);
+  goto(): void{
+    window.open('/signup');
   }
 }

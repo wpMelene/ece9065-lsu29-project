@@ -261,10 +261,10 @@ function update_account(email_attribute, auth_attribute, activation_attribute, a
             if(admin_attribute != "null"){
                 saved_account[i].admin_attribute = admin_attribute;
             }
-            return "update account information successfully."
+            return "update account information successfully.";
         }
-        return "Email not found."
-    }
+        
+    }return "Email not found.";
 
 }
 

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FunctionalityComponent } from '../functionality/functionality.component'
 import { AccountService } from '../../app/account.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AppComponent } from '../app.component'
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +21,8 @@ export class SignupComponent implements OnInit {
   need_verified = false;
   temp_need_verification: string[] = [];
 
-  constructor(private heroService: AccountService) { }
+  constructor(private heroService: AccountService,
+              private fatherNode: AppComponent) { }
 
   ngOnInit(): void {
   }
@@ -81,7 +83,7 @@ export class SignupComponent implements OnInit {
           }
         }
         if(found){
-        window.open('./verify.html', '_blank');
+        window.open('/verification', '_blank');
         this.heroService.updateAccountAccess(email, true, "null", "null").subscribe(hero => {
           this.messages.push(hero.toString());
         });

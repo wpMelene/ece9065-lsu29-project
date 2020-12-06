@@ -7,6 +7,7 @@ import { InitialLoginComponent } from './initial-login/initial-login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FunctionalityComponent } from './functionality/functionality.component';
 import { HttpClientModule } from '@angular/common/http';
+import { VerificationComponent } from './verification/verification.component';
 
 
 
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     InitialLoginComponent,
     SignupComponent,
-    FunctionalityComponent
+    FunctionalityComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserModule,

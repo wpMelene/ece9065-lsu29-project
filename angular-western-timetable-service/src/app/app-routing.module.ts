@@ -2,13 +2,16 @@ import { NgModule } from '@angular/core';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 import { SignupComponent } from './signup/signup.component';
+import { VerificationComponent } from './verification/verification.component';
 
 
 
 
 const routes: Routes = [
-  { path: 'initial-login', component: InitialLoginComponent },
-  { path: 'signup', component: SignupComponent }
+  // { path: 'initial-login', component: InitialLoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'verification', component: VerificationComponent },
+  { path: '**', component: InitialLoginComponent }
 ];
 
 @NgModule({
@@ -17,7 +20,7 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule {
-  constructor(public router: Router) {
+  // constructor(public router: Router) {
 
-  　　}
+  // 　　}
  }
