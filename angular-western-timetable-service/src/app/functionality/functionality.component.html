@@ -1,1 +1,38 @@
-<p>functionality works!</p>
+<div class = "righttop">
+    <p>Currently login as: {{ logged_in_users[-1].username_attribute }}</p>
+    <p>Authentication: {{ logged_in_users[-1].auth_attribute }}</p>
+
+    <div *ngIf = "!(logged_in_users[-1].auth_attribute)">
+        please enter email address here to verity your email: <input #email_verify placeholder="Email address" id="username2"> <br>
+        <button (click) = "signUpVerification.isVerified(email_verify.value)">Submit</button>  
+    </div>
+
+    <p>Course created: {{ logged_in_users[-1].course_created }}</p>
+</div>
+
+<div>
+    <h1 class = "center">Western online timetable search page</h1>
+    <br/>
+    <br/>
+    <br/>
+    Get the time entry <input #subject_code placeholder="subject code here"/><br>
+    <div class = "mleft">
+                      <input #course_code placeholder="course code here" name="" id="bar_three" /><br>
+                      <input #component placeholder="an optional course component here" id="bar_four" /> <button (click) = "get_Course(subject_code.value, course_code.value)">submit</button><br>
+    </div>
+    
+    Create a schedule <input #schedule1 placeholder="Enter the schedule name here" id="bar_five" /><button (click) = "add(schedule1.value)">create</button><br>
+    
+    Save a list of subject code, course code pairs under a given schedule name <input #schedule2 placeholder="please enter a schedule name here" id="bar_six"/><br>
+    <div class = "save_mleft">
+                                                                              <input #coursesString placeholder="subject & course code pairs here, divide by comma" id="bar_seven" /><button (click) = "save(schedule2.value, coursesString.value)">save</button><br>
+    </div>
+    
+    Display the time table for all the courses for a given course list <input #schedule3 placeholder="please enter a schedule name here" id="bar_eight" /> <button (click) = "get_Schedule(schedule3.value)">submit</button><br>
+    <br>
+    <div>
+        Result(s)
+        <div class = "container" id = "container">
+        </div>
+    </div>
+</div>

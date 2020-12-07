@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Schedule } from '../../schedule';
 import { AccountService } from '../../app/account.service';
-
+import { InitialLoginComponent } from '../initial-login/initial-login.component';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-functionality',
@@ -14,12 +15,17 @@ import { AccountService } from '../../app/account.service';
 
 export class FunctionalityComponent implements OnInit{
   front_end_schedule!: Schedule[];
-  saveres!: any;
-  
-  constructor(private heroService: AccountService) { }
+  saveres: any;
+  messages: string[] = [];
+
+  constructor(private heroService: AccountService,
+              private loginAccount: InitialLoginComponent,
+              public signUpVerification: SignupComponent) { }
 
   ngOnInit() {
   }
+
+  logged_in_users = this.loginAccount.logged_in_account;
 
   get_Course(subject_code: String, course_code: String): void {
     subject_code = subject_code.replace(/<[^>]+>/g, '');
@@ -53,4 +59,10 @@ export class FunctionalityComponent implements OnInit{
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
     this.heroService.getSchedule(schedule_name_attribute).subscribe(res => console.log(res));
   }
+
+  //auth_write_review()
+
+  //auth_edit_course_list()
+
+  //auth_delete_course_list()
 } 

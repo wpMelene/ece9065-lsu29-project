@@ -13,6 +13,6 @@ export class VerificationComponent implements OnInit {
   }
   
   back(){
-    window.close();
+    window.open('/initialLogin');
   }
 }
