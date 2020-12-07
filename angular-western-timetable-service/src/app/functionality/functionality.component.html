@@ -1,13 +1,13 @@
 <div class = "righttop">
-    <p>Currently login as: {{ logged_in_users[-1].username_attribute }}</p>
-    <p>Authentication: {{ logged_in_users[-1].auth_attribute }}</p>
+    <p>Currently login as: {{ logged_in_users[index_of_users].username_attribute }}</p>
+    <p>Authentication: {{ logged_in_users[index_of_users].auth_attribute }}</p>
 
-    <div *ngIf = "!(logged_in_users[-1].auth_attribute)">
+    <div *ngIf = "!(logged_in_users[index_of_users].auth_attribute)">
         please enter email address here to verity your email: <input #email_verify placeholder="Email address" id="username2"> <br>
         <button (click) = "signUpVerification.isVerified(email_verify.value)">Submit</button>  
     </div>
 
-    <p>Course created: {{ logged_in_users[-1].course_created }}</p>
+    <p>Course created: {{ logged_in_users[index_of_users].course_created }}</p>
 </div>
 
 <div>

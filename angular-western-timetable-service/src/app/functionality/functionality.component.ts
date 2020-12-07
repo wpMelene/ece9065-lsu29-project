@@ -19,13 +19,16 @@ export class FunctionalityComponent implements OnInit{
   messages: string[] = [];
 
   constructor(private heroService: AccountService,
-              private loginAccount: InitialLoginComponent,
+              public logged_in_users_component: InitialLoginComponent,
               public signUpVerification: SignupComponent) { }
 
-  ngOnInit() {
+  public logged_in_users = this.logged_in_users_component.logged_in_account;
+  public index_of_users = this.logged_in_users.length - 1;
+
+  ngOnInit() { console.log(this.logged_in_users);
   }
 
-  logged_in_users = this.loginAccount.logged_in_account;
+
 
   get_Course(subject_code: String, course_code: String): void {
     subject_code = subject_code.replace(/<[^>]+>/g, '');

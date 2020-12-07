@@ -11,6 +11,7 @@ import { VerificationComponent } from './verification/verification.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,7 @@ import { VerificationComponent } from './verification/verification.component';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [FunctionalityComponent],
+  providers: [FunctionalityComponent, InitialLoginComponent, SignupComponent, VerificationComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FunctionalityComponent } from '../functionality/functionality.component'
 import { AccountService } from '../../app/account.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FunctionalityComponent } from '../functionality/functionality.component';
 
 @Component({
   selector: 'app-initiallogin',
@@ -18,9 +18,8 @@ export class InitialLoginComponent implements OnInit {
   messages: string[] = [];
   logged_in_account: any[] = [];  //Accounts that logged in.
 
-  constructor(private router:Router,
-              private heroService: AccountService,
-              private functionality:FunctionalityComponent) { }
+  constructor(private router: Router,
+              private heroService: AccountService) {}
 
   ngOnInit(): void {
   }
@@ -58,7 +57,9 @@ export class InitialLoginComponent implements OnInit {
             currently_login_as.admin_attribute = hero.admin_attribute;                   // is the account an admin or granted as an admin?
             currently_login_as.course_created = hero.course_created;
 
-            this.logged_in_account.push(currently_login_as);
+            this.logged_in_account.push(currently_login_as); //success
+
+            window.open('./functionality');
           }
       });
   }

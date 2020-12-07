@@ -114,6 +114,7 @@ function delete_schedule(schedule_name){
     return "There is no such schedule to be deleted.";
 }
 }
+
 function temp(combination){
     var sub = "";
     var cor = "";
