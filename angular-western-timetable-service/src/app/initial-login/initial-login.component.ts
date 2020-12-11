@@ -59,7 +59,7 @@ export class InitialLoginComponent implements OnInit {
             currently_login_as.course_created = hero.course_created;
 
             
-            this.onlineTrackingService.append_online_user_array(currently_login_as); //success
+            this.onlineTrackingService.append_online_user_array(currently_login_as).subscribe(res => {console.log(res);})//success
 
             window.open('./functionality');
           }

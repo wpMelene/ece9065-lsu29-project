@@ -91,7 +91,7 @@ return result_http
 
 /** POST: add a new hero to the server */
 addSchedule(hero: Schedule): Observable<Schedule> {
-return this.http.post<any>(this.scheduleUrl, hero, this.httpOptions)
+return this.http.post<any>(this.scheduleUrl, hero, this.httpOptions);
 }
 
 

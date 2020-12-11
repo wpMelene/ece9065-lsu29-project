@@ -26,12 +26,14 @@ export class FunctionalityComponent implements OnInit{
   public logged_in_users:any[] = [];
   public length_of_array!:number;
 
-  ngOnInit() { this.logged_in_users = this.onlineTrackingService.get_online_user_array();
-               this.length_of_array = this.logged_in_users.length - 1;
-               console.log("check receiving...", this.logged_in_users);
+  ngOnInit() { this.get_online();
+               console.log(this.logged_in_users);
+               this.length_of_array = this.logged_in_users.length;
   }
 
-
+  get_online(){
+    this.onlineTrackingService.get_online_user_array().subscribe(res => {this.logged_in_users = res;})
+  }
 
   get_Course(subject_code: String, course_code: String): void {
     subject_code = subject_code.replace(/<[^>]+>/g, '');

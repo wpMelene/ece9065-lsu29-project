@@ -283,11 +283,31 @@ online_list = [];
 
 app.post('api/online', (req, res) =>{
     var temp = req.body;
+    console.log(temp);
     online_list.push(temp);
+    console.log(online_list);
+    res.send(JSON.stringify(online_list));
 });
 
 app.get('api/online', (req, res) => {
-    res.send(online_list);
+    console.log("get request", online_list);
+    res.send(JSON.stringify(online_list));
+});
+
+app.delete('api/online/:username', (req, res) => {
+    var temp = req.params.username;
+    var delete_index = -2;
+    for(i=0;i<online_list.length;i++){
+      if(online_list[i].username_attribute == temp){
+        delete_index = i;
+      }
+    }
+    if(delete_index != 2){
+        online_list.splice(delete_index, 1);
+      res.send(JSON.stringify("Successfully logged out."))
+    }else{
+      res.send(JSON.stringify("Some error happened."))
+    }
 });
 
 

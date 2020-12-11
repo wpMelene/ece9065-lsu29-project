@@ -9,7 +9,6 @@ import { Observable, of, Scheduler } from 'rxjs';
   @Injectable()
   export class MessageService {
 
-   private online_users:any[] = [];
    private onlineUsersUrl = 'http://localhost:3000/api/online';
    
    httpOptions = {
@@ -22,23 +21,12 @@ import { Observable, of, Scheduler } from 'rxjs';
     return this.http.post<any>(this.onlineUsersUrl, user, this.httpOptions)
   }
 
-  delete_online_user_array(username: string){
-    var i;
-    var delete_index = -2;
-    for(i=0;i<this.online_users.length;i++){
-      if(this.online_users[i].username_attribute == username){
-        delete_index = i;
-      }
-    }
-    if(delete_index != 2){
-      this.online_users.splice(delete_index, 1);
-      return true
-    }else{
-      return false
-    }
+  delete_online_user_array(username: string): Observable<any>{
+    const url = `${this.onlineUsersUrl}/${username}`;
+    return this.http.delete<any>(url, this.httpOptions)
   }
 
-  get_online_user_array(): any{
+  get_online_user_array(): Observable<any>{
     return this.http.get<any>(this.onlineUsersUrl);
   }
 
