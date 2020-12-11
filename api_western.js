@@ -3,12 +3,15 @@ const app = express();
 app.use(express.json());
 //var json_file = require('./Lab3-timetable-data.json');
 const fs = require('fs');
+var cors=require('cors');
 
+app.use(cors({origin:true,credentials: true}));
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header('Access-Control-Allow-Headers', 'Content-Type');
+    // Origin, Content-Type, X-Auth-Token
     next();
 });
 
@@ -281,20 +284,27 @@ app.put('/api/accounts', (req, res) => {
 // online users data storation ............................//
 online_list = [];
 
-app.post('api/online', (req, res) =>{
-    var temp = req.body;
-    console.log(temp);
+app.post('/api/online', (req, res) =>{
+    var temp = req.body.username_attribute;
     online_list.push(temp);
-    console.log(online_list);
+    console.log("post online list: ", online_list);
     res.send(JSON.stringify(online_list));
 });
 
-app.get('api/online', (req, res) => {
-    console.log("get request", online_list);
-    res.send(JSON.stringify(online_list));
+app.get('/api/online', (req, res) => {
+    var new_temp_list = [];
+    for(j=0;j<online_list.length;j++){
+        for(i=0;i<saved_account.length;i++){
+            if(online_list[j] == saved_account[i].username_attribute){
+                new_temp_list.push(saved_account[i])
+            }
+        }    
+    }
+    console.log("get request", new_temp_list);
+    res.send(JSON.stringify(new_temp_list));
 });
 
-app.delete('api/online/:username', (req, res) => {
+app.delete('/api/online/:username', (req, res) => {
     var temp = req.params.username;
     var delete_index = -2;
     for(i=0;i<online_list.length;i++){

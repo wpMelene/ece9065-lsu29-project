@@ -56,7 +56,7 @@ export class InitialLoginComponent implements OnInit {
             currently_login_as.auth_attribute = hero.auth_attribute;                     // is the email verified?
             currently_login_as.activation_attribute = hero.activation_attribute;         // is the account deactivated by the admin?
             currently_login_as.admin_attribute = hero.admin_attribute;                   // is the account an admin or granted as an admin?
-            currently_login_as.course_created = hero.course_created;
+            currently_login_as.course_created = hero.course_created;                     // database version //
 
             
             this.onlineTrackingService.append_online_user_array(currently_login_as).subscribe(res => {console.log(res);})//success

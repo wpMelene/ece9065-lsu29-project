@@ -23,16 +23,15 @@ export class FunctionalityComponent implements OnInit{
               public signUpVerification: SignupComponent,
               public onlineTrackingService: MessageService) { }
 
-  public logged_in_users:any[] = [];
-  public length_of_array!:number;
+  public currently_login_as:any;
 
   ngOnInit() { this.get_online();
-               console.log(this.logged_in_users);
-               this.length_of_array = this.logged_in_users.length;
   }
 
   get_online(){
-    this.onlineTrackingService.get_online_user_array().subscribe(res => {this.logged_in_users = res;})
+    this.onlineTrackingService.get_online_user_array().subscribe(res => {
+                                                                          this.currently_login_as = res[res.length - 1];
+                                                                          console.log("get online initial", this.currently_login_as);                                                                          })
   }
 
   get_Course(subject_code: String, course_code: String): void {
