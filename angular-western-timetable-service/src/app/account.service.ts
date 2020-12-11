@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, Scheduler } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
 import { Schedule } from '../schedule';
 
 

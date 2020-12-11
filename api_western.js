@@ -278,7 +278,17 @@ app.put('/api/accounts', (req, res) => {
     res.send(JSON.stringify(update_result));
 });
 
+// online users data storation ............................//
+online_list = [];
 
+app.post('api/online', (req, res) =>{
+    var temp = req.body;
+    online_list.push(temp);
+});
+
+app.get('api/online', (req, res) => {
+    res.send(online_list);
+});
 
 
 

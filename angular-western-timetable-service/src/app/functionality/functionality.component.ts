@@ -1,7 +1,7 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { MessageService } from '../../app/message.service';
 import { Schedule } from '../../schedule';
 import { AccountService } from '../../app/account.service';
 import { InitialLoginComponent } from '../initial-login/initial-login.component';
@@ -20,12 +20,15 @@ export class FunctionalityComponent implements OnInit{
 
   constructor(private heroService: AccountService,
               public logged_in_users_component: InitialLoginComponent,
-              public signUpVerification: SignupComponent) { }
+              public signUpVerification: SignupComponent,
+              public onlineTrackingService: MessageService) { }
 
-  public logged_in_users = this.logged_in_users_component.logged_in_account;
-  public index_of_users = this.logged_in_users.length - 1;
+  public logged_in_users:any[] = [];
+  public length_of_array!:number;
 
-  ngOnInit() { console.log(this.logged_in_users);
+  ngOnInit() { this.logged_in_users = this.onlineTrackingService.get_online_user_array();
+               this.length_of_array = this.logged_in_users.length - 1;
+               console.log("check receiving...", this.logged_in_users);
   }
 
 

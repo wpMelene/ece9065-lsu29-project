@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../../app/account.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FunctionalityComponent } from '../functionality/functionality.component';
+import { MessageService } from '../../app/message.service';
 
 @Component({
   selector: 'app-initiallogin',
@@ -16,10 +17,10 @@ export class InitialLoginComponent implements OnInit {
   // "list_of_pairs": course_list_attribute};
 
   messages: string[] = [];
-  logged_in_account: any[] = [];  //Accounts that logged in.
 
   constructor(private router: Router,
-              private heroService: AccountService) {}
+              private heroService: AccountService,
+              public onlineTrackingService: MessageService) {}
 
   ngOnInit(): void {
   }
@@ -57,7 +58,8 @@ export class InitialLoginComponent implements OnInit {
             currently_login_as.admin_attribute = hero.admin_attribute;                   // is the account an admin or granted as an admin?
             currently_login_as.course_created = hero.course_created;
 
-            this.logged_in_account.push(currently_login_as); //success
+            
+            this.onlineTrackingService.append_online_user_array(currently_login_as); //success
 
             window.open('./functionality');
           }
