@@ -254,29 +254,35 @@ app.post('/api/accounts', (req, res) => {
 });
 
 function update_account(email_attribute, auth_attribute, activation_attribute, admin_attribute){
+    console.log("EMAIL ATTRIBUTE IS: ", email_attribute);
     for(i = 0;i<saved_account.length;i++){
         if(saved_account[i].email_attribute == email_attribute){
             if(auth_attribute != "null"){
+                console.log("1st if block", auth_attribute);
                 saved_account[i].auth_attribute = auth_attribute;
             }
             if(activation_attribute != "null"){
+                console.log("2nd if block", activation_attribute);
                 saved_account[i].activation_attribute = activation_attribute;
             }
             if(admin_attribute != "null"){
+                console.log("3rd if block", admin_attribute);
                 saved_account[i].admin_attribute = admin_attribute;
             }
             return "update account information successfully.";
         }
-        
-    }return "Email not found.";
-
+    }
+    return "Email not found.";
 }
 
 app.put('/api/accounts', (req, res) => {
     // search for course code(s)
-    var username_attribute = req.body.username_attribute;
-    
-    var update_result = update_account(username_attribute);
+    var email_attribute = req.body.email_attribute;
+    var auth_attribute = req.body.auth_attribute
+    var activation_attribute = req.body.activation_attribute
+    var admin_attribute = req.body.admin_attribute
+
+    var update_result = update_account(email_attribute, auth_attribute, activation_attribute, admin_attribute);
 
     res.send(JSON.stringify(update_result));
 });
