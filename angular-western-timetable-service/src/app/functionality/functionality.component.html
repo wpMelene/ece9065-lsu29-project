@@ -27,7 +27,7 @@
     <br>
 
     <div *ngIf = "public_course_lst.length">
-        <div *ngFor='let course_list of public_course_lst'> {{ course_list }} </div>
+        <div *ngFor='let course_list of public_course_lst'> {{ "course list with name " + course_list.schedule_name_attribute + " has " + course_list.course_list_attribute + ", which was created by " + course_list.created_by}} </div>
     </div>
 
 <!-- -------------------------------------------AUTH and ACTIVATED USER FUNCTIONALITIES------------------------------------------------------------------------------------ -->

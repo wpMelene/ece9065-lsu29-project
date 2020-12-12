@@ -120,7 +120,6 @@ function get_full_course_info(subject_code, course_code){
 function update_course_review(subject_code, course_code, user_input_review){
     for(i = 0; i < json_stat.length; i++){
         if(json_stat[i].subject == subject_code && json_stat[i].catalog_nbr == course_code){
-            console.log(user_input_review, "AND!!!!!!!     ", json_stat[i].instructors);
             json_stat[i].instructors = user_input_review;
             return "update successfully.";
         }
@@ -137,18 +136,22 @@ function search_schedule(schedule_name){
     return false;
 }
 
-var public_list = ["Public course lists are listed below."];
+var public_list = [];
+function prepend(arr, item) {
+    return [item].concat(arr);
+}
 
-function create_schedule(schedule_name, access_for){
+function create_schedule(schedule_name, access_for, created_by){
     // Create a new schedule (to save a list of courses) with a given schedule name.
     // Return an error if name exists.
     const schedule_temp = {
         course_list_attribute: [],
         schedule_name_attribute: schedule_name,
-        access_for: access_for
+        access_for: access_for,
+        created_by: created_by
     }
     if(access_for == "public"){
-        public_list.push(schedule_temp);
+        public_list = prepend(public_list, schedule_temp);
     }
     if(search_schedule(schedule_name)){
         return "This schedule already exists.";
@@ -439,8 +442,9 @@ app.get('/api/allcourses/:subjectcode/:coursecode', (req, res) => {
 app.post('/api/schedules', (req, res) => {
     // create a schedule
     schedule_name_user_input = req.body.schedule_name_attribute;
-    access_for = req.body.access_for
-    var result = create_schedule(schedule_name_user_input, access_for);
+    access_for = req.body.access_for;
+    created_by = req.body.created_by;
+    var result = create_schedule(schedule_name_user_input, access_for, created_by);
     result = JSON.stringify(result);
     res.send(result);
 });

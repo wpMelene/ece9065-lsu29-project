@@ -51,17 +51,20 @@ export class FunctionalityComponent implements OnInit{
   add(schedule_name_attribute: string, schedule_access:string): void {
     schedule_name_attribute = schedule_name_attribute.trim();
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
-    
+    var created_by = this.currently_login_as.username_attribute;
     var schedule_temp = {
       schedule_name_attribute: schedule_name_attribute,
       course_list_attribute: [],
-      access_for: schedule_access
+      access_for: schedule_access,
+      created_by: created_by
     }
 
     if (!schedule_name_attribute) { return; }
     this.heroService.addSchedule(schedule_temp)
-      .subscribe(hero=> {
-        this.messages_functionality.push(hero.schedule_name_attribute + " is created, with " + hero.access_for + " accesibility");
+      .subscribe(hero=> {if(typeof hero != "string"){
+        this.messages_functionality.push(hero.schedule_name_attribute + " is created, with " + hero.access_for + " accesibility. It was created by " + hero.created_by);}else{
+          this.messages_functionality.push(hero);
+        }
       });
   }
 
@@ -72,7 +75,11 @@ export class FunctionalityComponent implements OnInit{
     course_list_attribute = course_list_attribute.trim();
     course_list_attribute = course_list_attribute.replace(/<[^>]+>/g, '');
     var list_pairs = course_list_attribute.split(",");
-    this.heroService.updateSchedule(schedule_name_attribute, list_pairs).subscribe(res => this.messages_functionality.push(res));;
+    this.heroService.updateSchedule(schedule_name_attribute, list_pairs).subscribe(res => { this.messages_functionality.push("Course list with name " +
+                                                                                            res.schedule_name_attribute +
+                                                                                            " is updated with course list of: " + res.course_list_attribute + ". It has accessibility of "
+                                                                                            + res.access_for)
+                                                                                          });;
   }
 
 

@@ -104,7 +104,7 @@ return this.http.post<any>(this.scheduleUrl, hero, this.httpOptions);
 
 
 /** PUT: update the hero on the server */
-updateSchedule(hero: String, course_list_attribute: String[]): Observable<Schedule> {
+updateSchedule(hero: String, course_list_attribute: String[]): Observable<any> {
 const my_schedule = {"schedule_name_attribute": hero, 
                      "list_of_pairs": course_list_attribute};
 return this.http.put(this.scheduleUrl, my_schedule, this.httpOptions)
