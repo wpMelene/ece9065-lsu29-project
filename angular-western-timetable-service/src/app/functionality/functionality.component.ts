@@ -17,6 +17,7 @@ export class FunctionalityComponent implements OnInit{
   front_end_schedule!: Schedule[];
   saveres: any;
   messages_functionality: any[] = [];
+  public_course_lst: any;
 
   constructor(private heroService: AccountService,
               public logged_in_users_component: InitialLoginComponent,
@@ -26,6 +27,7 @@ export class FunctionalityComponent implements OnInit{
   public currently_login_as:any;
 
   ngOnInit() { this.get_online();
+               this.onlineTrackingService.get_public_course_list().subscribe(res => this.public_course_lst = res);
   }
 
   get_online(){

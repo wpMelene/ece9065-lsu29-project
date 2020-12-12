@@ -10,6 +10,7 @@ import { Observable, of, Scheduler } from 'rxjs';
   export class MessageService {
 
    private onlineUsersUrl = 'http://localhost:3000/api/online';
+   private public_coursr_url = 'http://localhost:3000/api/public';
    
    httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -28,6 +29,10 @@ import { Observable, of, Scheduler } from 'rxjs';
 
   get_online_user_array(): Observable<any>{
     return this.http.get<any>(this.onlineUsersUrl);
+  }
+
+  get_public_course_list(){
+    return this.http.get<any>(this.public_coursr_url)
   }
 
   }

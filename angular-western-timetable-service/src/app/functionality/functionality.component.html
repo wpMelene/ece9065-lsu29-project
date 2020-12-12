@@ -26,6 +26,10 @@
     Display the time table for all the courses for a given course list <input #schedule3 placeholder="please enter a schedule name here" id="bar_eight" /> <button (click) = "get_Schedule(schedule3.value)">submit</button><br>
     <br>
 
+    <div *ngIf = "public_course_lst.length">
+        <div *ngFor='let course_list of public_course_lst'> {{ course_list }} </div>
+    </div>
+
 <!-- -------------------------------------------AUTH and ACTIVATED USER FUNCTIONALITIES------------------------------------------------------------------------------------ -->
     <div *ngIf="currently_login_as.auth_attribute && currently_login_as.activation_attribute">
         <!-- -------------ADD REVIEW------------- -->

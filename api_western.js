@@ -125,7 +125,7 @@ function search_schedule(schedule_name){
     return false;
 }
 
-var public_list = [];
+var public_list = ["Public course lists are listed below."];
 
 function create_schedule(schedule_name, access_for){
     // Create a new schedule (to save a list of courses) with a given schedule name.
@@ -367,7 +367,9 @@ app.delete('/api/online/:username', (req, res) => {
 });
 
 
-
+app.get('/api/public', (req, res) => {
+    res.send(JSON.stringify(public_list));
+})
 
 
 
