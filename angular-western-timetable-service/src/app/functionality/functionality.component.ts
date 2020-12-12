@@ -81,11 +81,15 @@ export class FunctionalityComponent implements OnInit{
     this.heroService.getSchedule(schedule_name_attribute).subscribe(res => this.messages_functionality.push(res));
   }
 
-  //auth_write_review()
+  auth_write_review(subject_code:string, course_code: string, user_input_review: string): void {
+    this.heroService.addReview(subject_code, course_code, user_input_review).subscribe(res => {
+      this.messages_functionality.push(res);
+    })
+  }
 
   //auth_edit_course_list()
 
-  auth_delete_course_list(schedule_name: string): void{
+  auth_delete_course_list(schedule_name: string): void {
 
   }
 

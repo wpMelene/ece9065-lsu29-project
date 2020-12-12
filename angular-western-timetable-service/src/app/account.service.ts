@@ -30,6 +30,7 @@ export class AccountService {
   private scheduleUrl = 'http://localhost:3000/api/schedules';  // URL to web api
   private accountUrl = 'http://localhost:3000/api/accounts'; // URL to web api
   private accountLoginUrl = 'http://localhost:3000/api/accountslogin'; // URL to web api
+  private reviewUrl = 'http://localhost:3000/api/review';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -87,6 +88,13 @@ getCourse(subject_code: String, course_code: String): Observable<any> {
 const url = `${this.courseUrl}/${subject_code}/${course_code}`;
 const result_http =  this.http.get<any>(url);
 return result_http
+}
+
+addReview(subject_code:string, course_code: string, user_input_review:string): Observable<any> {
+  var temp_pack = {subject_code: subject_code,
+                   course_code: course_code,
+                   user_input_review: user_input_review}
+  return this.http.post<any>(this.reviewUrl, temp_pack, this.httpOptions);
 }
 
 /** POST: add a new hero to the server */

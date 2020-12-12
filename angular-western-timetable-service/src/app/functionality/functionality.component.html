@@ -39,7 +39,7 @@
         Write Review to a course <input #subject_code_review placeholder="subject code here"/><br>
                                 <input #course_code_reviws placeholder="course code here"/><br>
                                 <input #review_content placeholder="review here"/>
-                                <button>Add Review</button>
+                                <button (click) = "auth_write_review(subject_code_review.value, course_code_reviws.value, review_content.value)">Add Review</button>
         </div>
         <!-- -------------ADD REVIEW------------- -->
 

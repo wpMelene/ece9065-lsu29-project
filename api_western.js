@@ -4,6 +4,7 @@ app.use(express.json());
 //var json_file = require('./Lab3-timetable-data.json');
 const fs = require('fs');
 var cors=require('cors');
+const { json } = require('body-parser');
 
 app.use(cors({origin:true,credentials: true}));
 app.all('*', function(req, res, next) {
@@ -107,12 +108,23 @@ function get_full_course_info(subject_code, course_code){
             var g = "enrl_stat: " + temp[0].enrl_stat;
             var h = "descr: " + temp[0].descr;
             var l = res.catalog_description;
+            var des = res.instructors;
 
-            var message = [a,b,c,d,e,f,g,h,l];
+            var message = [a,b,c,d,e,f,g,h,l,des];
 
             return message;
         }
     }
+}
+
+function update_course_review(subject_code, course_code, user_input_review){
+    for(i = 0; i < json_stat.length; i++){
+        if(json_stat[i].subject == subject_code && json_stat[i].catalog_nbr == course_code){
+            console.log(user_input_review, "AND!!!!!!!     ", json_stat[i].instructors);
+            json_stat[i].instructors = user_input_review;
+            return "update successfully.";
+        }
+    }return "No such course found."
 }
 
 function search_schedule(schedule_name){
@@ -372,7 +384,13 @@ app.get('/api/public', (req, res) => {
 })
 
 
-
+app.post('/api/review', (req, res) => {
+    var subject_code = req.body.subject_code;
+    var course_code = req.body.course_code;
+    var user_input_review = req.body.user_input_review;
+    var warn_message = update_course_review(subject_code, course_code, user_input_review);
+    res.send(JSON.stringify(warn_message));
+})
 
 
 
