@@ -46,8 +46,16 @@ export class FunctionalityComponent implements OnInit{
                                                                               });
   }
 
+  show_detail(course_list: string[]): void {
+    this.heroService.show_detail(course_list).subscribe(res => {
+                                                        var i;
+                                                        for(i=0;i<res[0].length;i++){
+                                                          this.messages_functionality.push(res[0][i]);
+                                                              }
+                                                            });
+  }
   
-
+  
   add(schedule_name_attribute: string, schedule_access:string): void {
     schedule_name_attribute = schedule_name_attribute.trim();
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');

@@ -30,7 +30,8 @@ export class AccountService {
   private scheduleUrl = 'http://localhost:3000/api/schedules';  // URL to web api
   private accountUrl = 'http://localhost:3000/api/accounts'; // URL to web api
   private accountLoginUrl = 'http://localhost:3000/api/accountslogin'; // URL to web api
-  private reviewUrl = 'http://localhost:3000/api/review';
+  private reviewUrl = 'http://localhost:3000/api/review'; // URL to web api
+  private courseListUrl = 'http://localhost:3000/api/courseList'
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -55,6 +56,9 @@ createAcount(username_attribute: String, email_attribute: String, password_attri
   return this.http.post<any>(this.accountUrl, new_added_account, this.httpOptions)
 }
 
+show_detail(course_list: string[]): Observable<any>{
+  return this.http.post<any>(this.courseListUrl, course_list, this.httpOptions)
+}
 
 
 loginAcount(email_attribute: String, password_attribute: String):Observable<Account>{

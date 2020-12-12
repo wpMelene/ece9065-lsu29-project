@@ -361,7 +361,6 @@ app.get('/api/online', (req, res) => {
             }
         }    
     }
-    console.log("get request", new_temp_list);
     res.send(JSON.stringify(new_temp_list));
 });
 
@@ -399,7 +398,15 @@ app.post('/api/review', (req, res) => {
 
 
 
-
+app.post('/api/courseList', (req, res) => {
+    var course_list = req.body;
+    var res_list = []
+    for(i=0;i<course_list.length;i++){
+        [a,b] = temp(course_list[i])
+        res_list.push(get_full_course_info(a,b));
+    }
+    res.send(JSON.stringify(res_list));
+})
 
 
 
