@@ -1,6 +1,8 @@
 <div class = "righttop">
     <p>Currently login as: {{ currently_login_as.username_attribute }}</p>
     <p>Authentication: {{ currently_login_as.auth_attribute }}</p>
+    <p>Activation: {{ currently_login_as.activation_attribute }}</p>
+    <p>admin: {{ currently_login_as.admin_attribute }}</p>
 
     <div *ngIf = "!(currently_login_as.auth_attribute)">
         please enter email address here to verity your email: <input #email_verify placeholder="Email address" id="username2"> <br>
@@ -21,18 +23,54 @@
                       <input #component placeholder="an optional course component here" id="bar_four" /> <button (click) = "get_Course(subject_code.value, course_code.value)">submit</button><br>
     </div>
     
-    Create a schedule <input #schedule1 placeholder="Enter the schedule name here" id="bar_five" /><button (click) = "add(schedule1.value)">create</button><br>
-    
-    Save a list of subject code, course code pairs under a given schedule name <input #schedule2 placeholder="please enter a schedule name here" id="bar_six"/><br>
-    <div class = "save_mleft">
-                                                                              <input #coursesString placeholder="subject & course code pairs here, divide by comma" id="bar_seven" /><button (click) = "save(schedule2.value, coursesString.value)">save</button><br>
-    </div>
-    
     Display the time table for all the courses for a given course list <input #schedule3 placeholder="please enter a schedule name here" id="bar_eight" /> <button (click) = "get_Schedule(schedule3.value)">submit</button><br>
     <br>
+
+<!-- -------------------------------------------AUTH and ACTIVATED USER FUNCTIONALITIES------------------------------------------------------------------------------------ -->
+    <div *ngIf="currently_login_as.auth_attribute && currently_login_as.activation_attribute">
+        <!-- -------------ADD REVIEW------------- -->
+        <div>
+        <br>
+        <br>
+        Write Review to a course <input #subject_code_review placeholder="subject code here"/><br>
+                                <input #course_code_reviws placeholder="course code here"/><br>
+                                <input #review_content placeholder="review here"/>
+                                <button>Add Review</button>
+        </div>
+        <!-- -------------ADD REVIEW------------- -->
+
+
+        <!-- -------------CREATE SCHEDULE and ADD COURSE CODE PAIRS INTO SCHEDULE----------------- -->
+        <div>
+            <br>
+            <br>
+            Create a schedule <input #schedule1 placeholder="Enter the schedule name here"/><br>
+                              <input #access_schedule placeholder="Enter private or public here"/><button (click) = "add(schedule1.value, access_schedule.value)">create</button><br>
+            Save a list of subject code, course code pairs under a given schedule name <input #schedule2 placeholder="please enter a schedule name here" id="bar_six"/><br>
+            <div class = "save_mleft">
+                                                                                      <input #coursesString placeholder="subject & course code pairs here, divide by comma" id="bar_seven" /><button (click) = "save(schedule2.value, coursesString.value)">save</button><br>
+            </div>
+        </div>
+        <!-- -------------CREATE SCHEDULE and ADD COURSE CODE PAIRS INTO SCHEDULE----------------- -->
+
+
+        <!-- --------------DELETE SCHEDULE--------------- -->
+        <div>
+            <br>
+            <br>
+            Delete a course list <input #delete_name placeholder="enter schedule name here"/><button (click) = "auth_delete_course_list(delete_name.value)">Delete</button>
+        </div>
+        <!-- --------------DELETE SCHEDULE--------------- -->
+
+    </div>
+<!-- -------------------------------------------AUTH and ACTIVATED USER FUNCTIONALITIES------------------------------------------------------------------------------------ -->
+
     <div>
+        <br>
+        <br>
         Result(s)
-        <div class = "container" id = "container">
+        <div *ngIf="messages_functionality.length">
+            <div *ngFor='let message of messages_functionality'> {{ message }} </div>
         </div>
     </div>
 </div>

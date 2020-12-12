@@ -16,7 +16,7 @@ import { SignupComponent } from '../signup/signup.component';
 export class FunctionalityComponent implements OnInit{
   front_end_schedule!: Schedule[];
   saveres: any;
-  messages: string[] = [];
+  messages_functionality: any[] = [];
 
   constructor(private heroService: AccountService,
               public logged_in_users_component: InitialLoginComponent,
@@ -37,17 +37,29 @@ export class FunctionalityComponent implements OnInit{
   get_Course(subject_code: String, course_code: String): void {
     subject_code = subject_code.replace(/<[^>]+>/g, '');
     course_code = course_code.replace(/<[^>]+>/g, '');
-    this.heroService.getCourse(subject_code, course_code).subscribe(res => {this.saveres = res, console.log(res)
-      });
+    this.heroService.getCourse(subject_code, course_code).subscribe(res => {  var x = res.split(",");
+                                                                              var i;
+                                                                              for(i=0;i<x.length;i++){
+                                                                                this.messages_functionality.push(x[i]);}
+                                                                              });
   }
 
-  add(schedule_name_attribute: string): void {
+  
+
+  add(schedule_name_attribute: string, schedule_access:string): void {
     schedule_name_attribute = schedule_name_attribute.trim();
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
+    
+    var schedule_temp = {
+      schedule_name_attribute: schedule_name_attribute,
+      course_list_attribute: [],
+      access_for: schedule_access
+    }
+
     if (!schedule_name_attribute) { return; }
-    this.heroService.addSchedule({ schedule_name_attribute } as Schedule)
+    this.heroService.addSchedule(schedule_temp)
       .subscribe(hero=> {
-        console.log(hero);
+        this.messages_functionality.push(hero.schedule_name_attribute + " is created, with " + hero.access_for + " accesibility");
       });
   }
 
@@ -58,18 +70,21 @@ export class FunctionalityComponent implements OnInit{
     course_list_attribute = course_list_attribute.trim();
     course_list_attribute = course_list_attribute.replace(/<[^>]+>/g, '');
     var list_pairs = course_list_attribute.split(",");
-    this.heroService.updateSchedule(schedule_name_attribute, list_pairs).subscribe(res => console.log(res));;
+    this.heroService.updateSchedule(schedule_name_attribute, list_pairs).subscribe(res => this.messages_functionality.push(res));;
   }
 
 
   get_Schedule(schedule_name_attribute: String): void {
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
-    this.heroService.getSchedule(schedule_name_attribute).subscribe(res => console.log(res));
+    this.heroService.getSchedule(schedule_name_attribute).subscribe(res => this.messages_functionality.push(res));
   }
 
   //auth_write_review()
 
   //auth_edit_course_list()
 
-  //auth_delete_course_list()
+  auth_delete_course_list(schedule_name: string): void{
+
+  }
+
 } 

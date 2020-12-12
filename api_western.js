@@ -54,7 +54,7 @@ function retrive_time_entry(subject_code, course_code){
     // Return an error if the subject code or course code doesn’t exist. 
     // If the course component is not specified, return time table entries for all components. 
     var res_list = [];
-    if(course_code == "none"){
+    if(course_code == "null"){
         for(i = 0; i < json_stat.length; i++){
             if(json_stat[i].subject == subject_code){
                 res_list.push([json_stat[i].subject + json_stat[i].catalog_nbr, json_stat[i].course_info[0].start_time, json_stat[i].course_info[0].end_time, json_stat[i].course_info[0].days]);
@@ -81,6 +81,40 @@ function retrive_time_entry(subject_code, course_code){
 }
 }
 
+function get_full_course_info(subject_code, course_code){
+    var res_list = [];
+    if(course_code == "null"){
+        for(i = 0; i < json_stat.length; i++){
+            if(json_stat[i].subject == subject_code){
+                res_list.push(json_stat[i].subject + json_stat[i].catalog_nbr);
+            }
+        }
+        return "class found: " + res_list;
+    }
+    for(i = 0; i < json_stat.length; i++){
+        if(json_stat[i].subject == subject_code && json_stat[i].catalog_nbr == course_code){
+            var res = json_stat[i];
+            var temp = res.course_info;
+            
+            var a = "catalog_nbr:" + res.catalog_nbr;
+            var b = "subject:" + res.subject;
+            var c = "className:" + res.className;
+            var d = "course_info: This course has class no. of " + temp[0].class_nbr.toString() + "and starts at " + temp[0].start_time;
+            " ends at " + temp[0].end_time + ". The class is held in " + temp[0].campus + " campus with facility ID of  ";
+            temp[0].facility_ID + ". The class will be held in " + temp[0].days.toString();
+            var e = "The class_section is " + temp[0].class_section;
+            var f = "ssr_component: " + temp[0].ssr_component;
+            var g = "enrl_stat: " + temp[0].enrl_stat;
+            var h = "descr: " + temp[0].descr;
+            var l = res.catalog_description;
+
+            var message = [a,b,c,d,e,f,g,h,l];
+
+            return message;
+        }
+    }
+}
+
 function search_schedule(schedule_name){
     // search for a schedule name to check whether it already exists
     for(i = 0; i < saved_schedule.length; i++){
@@ -91,12 +125,18 @@ function search_schedule(schedule_name){
     return false;
 }
 
-function create_schedule(schedule_name){
+var public_list = [];
+
+function create_schedule(schedule_name, access_for){
     // Create a new schedule (to save a list of courses) with a given schedule name.
     // Return an error if name exists.
     const schedule_temp = {
         course_list_attribute: [],
-        schedule_name_attribute: schedule_name
+        schedule_name_attribute: schedule_name,
+        access_for: access_for
+    }
+    if(access_for == "public"){
+        public_list.push(schedule_temp);
     }
     if(search_schedule(schedule_name)){
         return "This schedule already exists.";
@@ -371,7 +411,7 @@ app.get('/api/allcourses/:subjectcode/:coursecode', (req, res) => {
     // retrive time entry for a given subject code and a given course code
     const subject_code_user_input = req.params.subjectcode;
     const course_code_user_input = req.params.coursecode;
-    var search_result = JSON.stringify(retrive_time_entry(subject_code_user_input, course_code_user_input));
+    var search_result = JSON.stringify(get_full_course_info(subject_code_user_input, course_code_user_input));
     res.send(JSON.stringify(search_result));
 
 });
@@ -379,7 +419,8 @@ app.get('/api/allcourses/:subjectcode/:coursecode', (req, res) => {
 app.post('/api/schedules', (req, res) => {
     // create a schedule
     schedule_name_user_input = req.body.schedule_name_attribute;
-    var result = create_schedule(schedule_name_user_input);
+    access_for = req.body.access_for
+    var result = create_schedule(schedule_name_user_input, access_for);
     result = JSON.stringify(result);
     res.send(result);
 });

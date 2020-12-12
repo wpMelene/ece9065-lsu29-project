@@ -83,14 +83,14 @@ updateAccountAccess(email_attribute: string, auth_attribute: any, activation_att
 
 //---------------------------------------------------------------------------------Schedule services------------------------------------------------------------------------------//
 /** GET hero by id. Will 404 if id not found */
-getCourse(subject_code: String, course_code: String): Observable<Course> {
+getCourse(subject_code: String, course_code: String): Observable<any> {
 const url = `${this.courseUrl}/${subject_code}/${course_code}`;
 const result_http =  this.http.get<any>(url);
 return result_http
 }
 
 /** POST: add a new hero to the server */
-addSchedule(hero: Schedule): Observable<Schedule> {
+addSchedule(hero: any): Observable<any> {
 return this.http.post<any>(this.scheduleUrl, hero, this.httpOptions);
 }
 
