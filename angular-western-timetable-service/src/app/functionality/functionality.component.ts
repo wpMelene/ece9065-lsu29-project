@@ -46,6 +46,12 @@ export class FunctionalityComponent implements OnInit{
     });
   }
 
+  mark_user_activated(email: string): void{
+    this.heroService.updateAccountAccess(email, "null", true , "null").subscribe(hero => {
+      this.messages_functionality.push(hero.toString());
+    });
+  }
+
   get_online(){
     this.onlineTrackingService.get_online_user_array().subscribe(res => {
                                                                           this.currently_login_as = res[res.length - 1];
@@ -71,6 +77,10 @@ export class FunctionalityComponent implements OnInit{
                                                             });
   }
   
+  hide_review(course_code: string): void {
+    var course_code_temp = {course_code: course_code}
+    this.heroService.hide_review(course_code_temp).subscribe(res => this.messages_functionality.push(res));
+  }
   
   add(schedule_name_attribute: string, schedule_access:string, schedule_description: string): void {
     schedule_name_attribute = schedule_name_attribute.trim();

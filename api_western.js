@@ -443,7 +443,18 @@ app.get('/api/privateCourse/:username', (req, res) => {
 });
 
 
-
+app.post('/api/scheduleReview', (req, res) => {
+    var course_code = req.body.course_code
+    console.log(course_code);
+    [a,b]=temp(course_code);
+    console.log(a,b);
+    for(i=0;i<json_stat.length;i++){
+        if(json_stat[i].subject == a && json_stat[i].catalog_nbr == b){
+            json_stat[i].instructors = [];
+            res.send(JSON.stringify("Review hided."));
+        }
+    }
+})
 
 
 

@@ -20,6 +20,12 @@
     Mark other user as deactivated: <input #email_mark_deactivate placeholder="email here"/>
     <button (click) = "mark_user_deactivated(email_mark_deactivate.value)">Mark</button><br>
 
+    Remove other user from deactivated list: <input #email_mark_activate placeholder="email here"/>
+    <button (click) = "mark_user_activated(email_mark_activate.value)">Mark</button><br>
+
+    Hide a review: <input #course_code_with_reviws placeholder="course code here"/>
+    <button (click) = "hide_review(course_code_with_reviws.value)">Hide</button><br>
+
 </div>
 
 <div>
@@ -38,6 +44,7 @@
     <br>
 
     <div *ngIf = "public_course_lst.length">
+        Public schedules created by users:
         <div *ngFor='let course_list of public_course_lst'> {{ "course list with name " + course_list.schedule_name_attribute + " has " + course_list.course_list_attribute + " with length " + course_list.course_list_attribute.length.toString() + ", which was created by " + course_list.created_by + " with description: " + course_list.schedule_description}} 
                                                             <button (click) = "show_detail(course_list.course_list_attribute)">Detail</button>
         </div>

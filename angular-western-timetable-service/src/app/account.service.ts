@@ -33,6 +33,7 @@ export class AccountService {
   private reviewUrl = 'http://localhost:3000/api/review'; // URL to web api
   private courseListUrl = 'http://localhost:3000/api/courseList' // URL to web api
   private show_current_user_schedule_url = 'http://localhost:3000/api/privateCourse' // URL to web api
+  private schduleReviewUrl = 'http://localhost:3000/api/scheduleReview' // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -82,7 +83,9 @@ updateAccountAccess(email_attribute: string, auth_attribute: any, activation_att
 
 
 
-
+hide_review(course_code:any): Observable<any>{
+  return this.http.post<any>(this.schduleReviewUrl, course_code, this.httpOptions);
+}
 
 
 
