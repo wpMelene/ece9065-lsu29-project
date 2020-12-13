@@ -120,8 +120,9 @@ const url = `${this.scheduleUrl}/${schedule_name_attribute}`;
 return this.http.get<any>(url);
 }
 
-show_current_user_schedule(username: string): Observable<any> {
-  const url = `${this.show_current_user_schedule_url}/${username}`;
+show_current_user_schedule(username_attribute: string): Observable<any> {
+  console.log("I am called");
+  const url = `${this.show_current_user_schedule_url}/${username_attribute}`;
   return this.http.get<any>(url);
 }
 

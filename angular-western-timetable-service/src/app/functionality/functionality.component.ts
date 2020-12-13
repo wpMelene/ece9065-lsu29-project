@@ -18,8 +18,9 @@ export class FunctionalityComponent implements OnInit{
   saveres: any;
   messages_functionality: any[] = [];
   public_course_lst: any;
+  logged_in_course_lst!: [];
 
-  constructor(private heroService: AccountService,
+  constructor(public heroService: AccountService,
               public logged_in_users_component: InitialLoginComponent,
               public signUpVerification: SignupComponent,
               public onlineTrackingService: MessageService) { }
@@ -27,6 +28,7 @@ export class FunctionalityComponent implements OnInit{
   public currently_login_as:any;
 
   ngOnInit() { this.get_online();
+              //  this.show_current_user_schedule(this.currently_login_as.username_attribute);
                this.onlineTrackingService.get_public_course_list().subscribe(res => this.public_course_lst = res);
   }
 
@@ -107,10 +109,22 @@ export class FunctionalityComponent implements OnInit{
   }
 
   show_current_user_schedule(username: string): void {
-    this.heroService.show_current_user_schedule(username).subscribe(res => {console.log(res);
+    this.heroService.show_current_user_schedule(username).subscribe(res => {
                                                                             var i;
+                                                                            var temp:any = [];
+                                                                            
                                                                             for(i=0;i<res.length;i++){
-                                                                              this.messages_functionality.push(res[i]);}
+                                                                              if(i > 20){
+                                                                                this.messages_functionality.push("You can create up to 20 schedules.")
+                                                                                return;
+                                                                              }
+                                                                              temp.push(res[i]);
+                                                                              
+                                                                              // this.messages_functionality.push(
+                                                                              //   res[i].schedule_name_attribute + "has courses: " + res[i].course_list_attribute.toString() + " with accessibility of " + res[i].access_for
+                                                                              //   );
+                                                                            }
+                                                                            this.logged_in_course_lst = temp;
     });
   }
 

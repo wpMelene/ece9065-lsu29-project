@@ -12,6 +12,8 @@
     <p>Course created: {{ currently_login_as.course_created }}</p>
 </div>
 
+
+
 <div>
     <h1 class = "center">Western online timetable search page</h1>
     <br/>
@@ -73,6 +75,15 @@
             Show your created course lists: <button (click) = "show_current_user_schedule(currently_login_as.username_attribute)">Show</button>
         </div>
         <!-- --------------DELETE SCHEDULE--------------- -->
+        <br>
+        <br>
+        <br>
+        <div *ngIf = "logged_in_course_lst.length != 0">
+            created schedules: 
+            <div *ngFor='let log_schedule of logged_in_course_lst'>{{ log_schedule.schedule_name_attribute + "has courses: " + log_schedule.course_list_attribute.toString() + " with accessibility of " + log_schedule.access_for }}
+                <button (click) = "show_detail(log_schedule.course_list_attribute)">Detail</button>
+            </div>
+        </div>
 
     </div>
 <!-- -------------------------------------------AUTH and ACTIVATED USER FUNCTIONALITIES------------------------------------------------------------------------------------ -->

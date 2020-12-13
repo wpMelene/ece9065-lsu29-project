@@ -421,13 +421,15 @@ app.post('/api/courseList', (req, res) => {
 
 app.get('/api/privateCourse/:username', (req, res) => {
     var username_attribute = req.params.username;
-    console.log(username_attribute);
+    console.log("debugging...", username_attribute);
     var res_list = [];
     for(i=0;i<saved_schedule.length;i++){
         if(saved_schedule[i].created_by == username_attribute){
             res_list.push(saved_schedule[i])
         }
-    }res.send(JSON.stringify(res_list));
+    }
+    console.log(res_list);
+    res.send(JSON.stringify(res_list));
 });
 
 
