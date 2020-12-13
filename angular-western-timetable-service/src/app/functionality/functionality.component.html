@@ -12,7 +12,15 @@
     <p>Course created: {{ currently_login_as.course_created }}</p>
 </div>
 
+<div *ngIf = "currently_login_as.admin_attribute">
 
+    Grant other user as an admin: <input #email_grant_admin placeholder="email here"/>
+    <button (click) = "grant_user_admin(email_grant_admin.value)">Grant</button><br>
+
+    Mark other user as deactivated: <input #email_mark_deactivate placeholder="email here"/>
+    <button (click) = "mark_user_deactivated(email_mark_deactivate.value)">Mark</button><br>
+
+</div>
 
 <div>
     <h1 class = "center">Western online timetable search page</h1>

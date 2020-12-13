@@ -219,7 +219,15 @@ function delete_all_schedules(){
 }
 
 // -------------USER ACCOUNT OPERATION ------------------------------//
-var saved_account = [];
+var saved_account = [{
+    username_attribute: "administrator",
+    email_attribute: "admin@admin.com",
+    password_attribute:"admin1",
+    auth_attribute: true,              // is the email verified?
+    activation_attribute: true,         // is the account deactivated by the admin?
+    admin_attribute: true,             // is the account an admin or granted as an admin?
+    course_created: 0
+                    }];
 var username_list = [];
 var email_list = [];
 
@@ -326,16 +334,18 @@ function update_account(email_attribute, auth_attribute, activation_attribute, a
             if(auth_attribute != "null"){
                 console.log("1st if block", auth_attribute);
                 saved_account[i].auth_attribute = auth_attribute;
+                return "update account information successfully.";
             }
             if(activation_attribute != "null"){
                 console.log("2nd if block", activation_attribute);
                 saved_account[i].activation_attribute = activation_attribute;
+                return "update account information successfully.";
             }
             if(admin_attribute != "null"){
                 console.log("3rd if block", admin_attribute);
                 saved_account[i].admin_attribute = admin_attribute;
+                return "update account information successfully.";
             }
-            return "update account information successfully.";
         }
     }
     return "Email not found.";

@@ -38,7 +38,8 @@ export class InitialLoginComponent implements OnInit {
       .subscribe(hero=> {
         if(typeof hero == "string"){
           this.messages.push(hero)
-        }else{
+        }
+        else{
             this.messages.push("Login Sucessfully");
             
             var currently_login_as = {

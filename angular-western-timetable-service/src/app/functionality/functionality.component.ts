@@ -19,6 +19,7 @@ export class FunctionalityComponent implements OnInit{
   messages_functionality: any[] = [];
   public_course_lst: any;
   logged_in_course_lst!: [];
+  
 
   constructor(public heroService: AccountService,
               public logged_in_users_component: InitialLoginComponent,
@@ -30,6 +31,19 @@ export class FunctionalityComponent implements OnInit{
   ngOnInit() { this.get_online();
               //  this.show_current_user_schedule(this.currently_login_as.username_attribute);
                this.onlineTrackingService.get_public_course_list().subscribe(res => this.public_course_lst = res);
+               this.logged_in_course_lst = [];
+  }
+
+  grant_user_admin(email: string): void {
+    this.heroService.updateAccountAccess(email, "null", "null", true).subscribe(hero => {
+      this.messages_functionality.push(hero.toString());
+    });
+  }
+
+  mark_user_deactivated(email: string): void{
+    this.heroService.updateAccountAccess(email, "null", false , "null").subscribe(hero => {
+      this.messages_functionality.push(hero.toString());
+    });
   }
 
   get_online(){
