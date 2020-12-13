@@ -31,7 +31,8 @@ export class AccountService {
   private accountUrl = 'http://localhost:3000/api/accounts'; // URL to web api
   private accountLoginUrl = 'http://localhost:3000/api/accountslogin'; // URL to web api
   private reviewUrl = 'http://localhost:3000/api/review'; // URL to web api
-  private courseListUrl = 'http://localhost:3000/api/courseList'
+  private courseListUrl = 'http://localhost:3000/api/courseList' // URL to web api
+  private show_current_user_schedule_url = 'http://localhost:3000/api/privateCourse' // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -61,7 +62,7 @@ show_detail(course_list: string[]): Observable<any>{
 }
 
 
-loginAcount(email_attribute: String, password_attribute: String):Observable<Account>{
+loginAcount(email_attribute: String, password_attribute: String):Observable<any>{
   const login_account = {
                               "email_attribute":email_attribute,
                               "password_attribute":password_attribute,
@@ -119,18 +120,9 @@ const url = `${this.scheduleUrl}/${schedule_name_attribute}`;
 return this.http.get<any>(url);
 }
 
-private handleError<T>(operation = 'operation', result?: T) {
-return (error: any): Observable<T> => {
-
-  // TODO: send the error to remote logging infrastructure
-  console.error(error); // log to console instead
-
-  // TODO: better job of transforming error for user consumption
-  console.log(`${operation} failed: ${error.message}`);
-
-  // Let the app keep running by returning an empty result.
-  return of(result as T);
-};
+show_current_user_schedule(username: string): Observable<any> {
+  const url = `${this.show_current_user_schedule_url}/${username}`;
+  return this.http.get<any>(url);
 }
 
 }

@@ -48,7 +48,7 @@ export class InitialLoginComponent implements OnInit {
               auth_attribute: false,              // is the email verified?
               activation_attribute: true,         // is the account deactivated by the admin?
               admin_attribute: false,             // is the account an admin or granted as an admin?
-              course_created: 0
+              course_created : 0
             };
 
             currently_login_as.username_attribute = hero.username_attribute;

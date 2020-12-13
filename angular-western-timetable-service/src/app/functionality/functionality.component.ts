@@ -56,18 +56,22 @@ export class FunctionalityComponent implements OnInit{
   }
   
   
-  add(schedule_name_attribute: string, schedule_access:string): void {
+  add(schedule_name_attribute: string, schedule_access:string, schedule_description: string): void {
     schedule_name_attribute = schedule_name_attribute.trim();
     schedule_name_attribute = schedule_name_attribute.replace(/<[^>]+>/g, '');
     var created_by = this.currently_login_as.username_attribute;
+
     var schedule_temp = {
       schedule_name_attribute: schedule_name_attribute,
       course_list_attribute: [],
       access_for: schedule_access,
-      created_by: created_by
+      created_by: created_by,
+      schedule_description: schedule_description
     }
 
-    if (!schedule_name_attribute) { return; }
+    if (!schedule_name_attribute) { this.messages_functionality.push("Schedule name can't be null.")
+                                                                    return; }
+
     this.heroService.addSchedule(schedule_temp)
       .subscribe(hero=> {if(typeof hero != "string"){
         this.messages_functionality.push(hero.schedule_name_attribute + " is created, with " + hero.access_for + " accesibility. It was created by " + hero.created_by);}else{
@@ -100,6 +104,14 @@ export class FunctionalityComponent implements OnInit{
     this.heroService.addReview(subject_code, course_code, user_input_review).subscribe(res => {
       this.messages_functionality.push(res);
     })
+  }
+
+  show_current_user_schedule(username: string): void {
+    this.heroService.show_current_user_schedule(username).subscribe(res => {console.log(res);
+                                                                            var i;
+                                                                            for(i=0;i<res.length;i++){
+                                                                              this.messages_functionality.push(res[i]);}
+    });
   }
 
   //auth_edit_course_list()

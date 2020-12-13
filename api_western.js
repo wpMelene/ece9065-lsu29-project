@@ -141,25 +141,34 @@ function prepend(arr, item) {
     return [item].concat(arr);
 }
 
-function create_schedule(schedule_name, access_for, created_by){
+function create_schedule(schedule_name, access_for, created_by, schedule_description){
     // Create a new schedule (to save a list of courses) with a given schedule name.
     // Return an error if name exists.
     const schedule_temp = {
         course_list_attribute: [],
         schedule_name_attribute: schedule_name,
         access_for: access_for,
-        created_by: created_by
+        created_by: created_by,
+        schedule_description: schedule_description
     }
-    if(access_for == "public"){
-        public_list = prepend(public_list, schedule_temp);
-    }
+    
     if(search_schedule(schedule_name)){
         return "This schedule already exists.";
     }
-    else{
-        saved_schedule.push(schedule_temp);
-        return schedule_temp;
+
+    for(i=0;i<saved_account.length;i++){
+        if(saved_account[i].username_attribute == created_by){
+            saved_account[i].course_created += 1;
+        }
     }
+
+    if(access_for == "public"){
+        public_list = prepend(public_list, schedule_temp);
+    }
+    
+    saved_schedule.push(schedule_temp);
+    return schedule_temp;
+    
 }
 
 function delete_schedule(schedule_name){
@@ -410,7 +419,16 @@ app.post('/api/courseList', (req, res) => {
     res.send(JSON.stringify(res_list));
 })
 
-
+app.get('/api/privateCourse/:username', (req, res) => {
+    var username_attribute = req.params.username;
+    console.log(username_attribute);
+    var res_list = [];
+    for(i=0;i<saved_schedule.length;i++){
+        if(saved_schedule[i].created_by == username_attribute){
+            res_list.push(saved_schedule[i])
+        }
+    }res.send(JSON.stringify(res_list));
+});
 
 
 
@@ -453,7 +471,8 @@ app.post('/api/schedules', (req, res) => {
     schedule_name_user_input = req.body.schedule_name_attribute;
     access_for = req.body.access_for;
     created_by = req.body.created_by;
-    var result = create_schedule(schedule_name_user_input, access_for, created_by);
+    schedule_description = req.body.schedule_description;
+    var result = create_schedule(schedule_name_user_input, access_for, created_by, schedule_description);
     result = JSON.stringify(result);
     res.send(result);
 });

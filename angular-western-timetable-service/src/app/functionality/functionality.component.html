@@ -20,15 +20,16 @@
     Get the time entry <input #subject_code placeholder="subject code here"/><br>
     <div class = "mleft">
                       <input #course_code placeholder="course code here" name="" id="bar_three" /><br>
-                      <input #component placeholder="an optional course component here" id="bar_four" /> <button (click) = "get_Course(subject_code.value, course_code.value)">submit</button><br>
+                      <input #component placeholder="an optional course component here" id="bar_four" /><br>
+                      <button (click) = "get_Course(subject_code.value, course_code.value)">submit</button><br>
     </div>
     
     Display the time table for all the courses for a given course list <input #schedule3 placeholder="please enter a schedule name here" id="bar_eight" /> <button (click) = "get_Schedule(schedule3.value)">submit</button><br>
     <br>
 
     <div *ngIf = "public_course_lst.length">
-        <div *ngFor='let course_list of public_course_lst'> {{ "course list with name " + course_list.schedule_name_attribute + " has " + course_list.course_list_attribute + " with length " + course_list.course_list_attribute.length.toString() + ", which was created by " + course_list.created_by}} 
-                                                            Show detail for courses in this schedule:<button (click) = "show_detail(course_list.course_list_attribute)">Detail</button>
+        <div *ngFor='let course_list of public_course_lst'> {{ "course list with name " + course_list.schedule_name_attribute + " has " + course_list.course_list_attribute + " with length " + course_list.course_list_attribute.length.toString() + ", which was created by " + course_list.created_by + " with description: " + course_list.schedule_description}} 
+                                                            <button (click) = "show_detail(course_list.course_list_attribute)">Detail</button>
         </div>
     </div>
 
@@ -51,7 +52,8 @@
             <br>
             <br>
             Create a schedule <input #schedule1 placeholder="Enter the schedule name here"/><br>
-                              <input #access_schedule placeholder="Enter private or public here"/><button (click) = "add(schedule1.value, access_schedule.value)">create</button><br>
+                              <input #access_schedule placeholder="Enter private or public here"/><br>
+                              <input #schedule_description placeholder="description here"/><button (click) = "add(schedule1.value, access_schedule.value, schedule_description.value)">create</button><br>
             Save a list of subject code, course code pairs under a given schedule name <input #schedule2 placeholder="please enter a schedule name here" id="bar_six"/><br>
             <div class = "save_mleft">
                                                                                       <input #coursesString placeholder="subject & course code pairs here, divide by comma" id="bar_seven" /><button (click) = "save(schedule2.value, coursesString.value)">save</button><br>
@@ -65,6 +67,10 @@
             <br>
             <br>
             Delete a course list <input #delete_name placeholder="enter schedule name here"/><button (click) = "auth_delete_course_list(delete_name.value)">Delete</button>
+        </div>
+
+        <div>
+            Show your created course lists: <button (click) = "show_current_user_schedule(currently_login_as.username_attribute)">Show</button>
         </div>
         <!-- --------------DELETE SCHEDULE--------------- -->
 
